@@ -2,10 +2,5 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm install",
-  "env": {
-    "SHOPIFY_API_KEY": "@shopify_api_key",
-    "SHOPIFY_API_SECRET": "@shopify_api_secret",
-    "SHOPIFY_APP_URL": "@shopify_app_url"
-  }
+  "installCommand": "npm install"
 }
