@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,8 @@ import {
 } from "lucide-react";
 
 export default function ProjectDetail() {
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query as { id?: string };
 
   // Mock data - in real app, fetch based on id
   const project = {
