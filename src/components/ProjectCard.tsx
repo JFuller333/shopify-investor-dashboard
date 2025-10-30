@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 interface ProjectCardProps {
   id: string;
@@ -82,7 +82,7 @@ export const ProjectCard = ({
           </div>
         </div>
 
-        <Link to={`/project/${id}`}>
+        <Link href={`/project/${id}`}>
           <Button className="w-full" variant="default">
             View Details
             <ArrowRight className="h-4 w-4" />
