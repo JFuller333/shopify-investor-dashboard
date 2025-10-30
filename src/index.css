@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Base colors - clean, professional fintech palette */
+    --background: 0 0% 98%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Brand colors from spec */
+    --primary: 215 25% 15%;
+    --primary-foreground: 0 0% 98%;
+
+    --success: 123 40% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 44 96% 58%;
+    --warning-foreground: 215 25% 15%;
+
+    --danger: 4 79% 56%;
+    --danger-foreground: 0 0% 100%;
+
+    --secondary: 215 15% 92%;
+    --secondary-foreground: 215 25% 15%;
+
+    --muted: 215 15% 95%;
+    --muted-foreground: 215 15% 45%;
+
+    --accent: 215 20% 90%;
+    --accent-foreground: 215 25% 15%;
+
+    --destructive: 4 79% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 15% 88%;
+    --input: 215 15% 90%;
+    --ring: 215 25% 15%;
+
+    --radius: 0.75rem;
+
+    /* Gradients for visual interest */
+    --gradient-success: linear-gradient(135deg, hsl(123, 40%, 45%), hsl(123, 40%, 55%));
+    --gradient-warning: linear-gradient(135deg, hsl(44, 96%, 58%), hsl(44, 96%, 68%));
+    --gradient-danger: linear-gradient(135deg, hsl(4, 79%, 56%), hsl(4, 79%, 66%));
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  }
+
+  .dark {
+    --background: 215 30% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 215 25% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 215 25% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 215 25% 15%;
+
+    --success: 123 40% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 44 96% 58%;
+    --warning-foreground: 215 25% 15%;
+
+    --danger: 4 79% 56%;
+    --danger-foreground: 0 0% 100%;
+
+    --secondary: 215 25% 18%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 215 25% 18%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 215 25% 18%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 4 79% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 25% 18%;
+    --input: 215 25% 18%;
+    --ring: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
