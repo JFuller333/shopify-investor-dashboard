@@ -13,6 +13,7 @@ interface ProjectCardProps {
   roi: number;
   timeline: string;
   category: string;
+  projectGoal?: number; // Total project funding goal (separate from user's investment)
 }
 
 export const ProjectCard = ({
@@ -24,10 +25,14 @@ export const ProjectCard = ({
   roi,
   timeline,
   category,
+  projectGoal,
   isDonor = false,
 }: ProjectCardProps & { isDonor?: boolean }) => {
   const fundingProgress = (funded / totalCost) * 100;
   const remaining = totalCost - funded;
+  // For investors: show project goal if provided (project's total funding goal)
+  // For donors: project goal is the same as totalCost, so don't show separately
+  const showProjectGoal = projectGoal && !isDonor;
 
   return (
     <Card className="p-6 transition-all hover:shadow-lg">
@@ -58,6 +63,17 @@ export const ProjectCard = ({
               ${remaining.toLocaleString()} remaining
             </span>
           </div>
+          {showProjectGoal && (
+            <div className="mt-3 rounded-lg border border-primary/20 bg-primary/5 p-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-primary">Project Goal</span>
+                <span className="text-sm font-semibold">${projectGoal.toLocaleString()}</span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Total funding target for the entire project
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-between rounded-lg bg-accent/50 p-4">

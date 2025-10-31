@@ -21,7 +21,8 @@ const initialInvestments = [
     roi: 25,
     status: "active",
     risk: "High",
-    duration: "18 months"
+    duration: "18 months",
+    projectGoal: 500000 // Total funding goal for the entire project
   },
   {
     id: 2,
@@ -34,7 +35,8 @@ const initialInvestments = [
     roi: 18,
     status: "active",
     risk: "Medium",
-    duration: "24 months"
+    duration: "24 months",
+    projectGoal: 750000 // Total funding goal for the entire project
   },
   {
     id: 3,
@@ -47,7 +49,8 @@ const initialInvestments = [
     roi: 15,
     status: "active",
     risk: "Low",
-    duration: "36 months"
+    duration: "36 months",
+    projectGoal: 1000000 // Total funding goal for the entire project
   }
 ];
 
@@ -268,10 +271,12 @@ export default function InvestorDashboard() {
                 filteredInvestments.map((investment) => {
                   // Map investment data to ProjectCard format
                   // For investments: totalCost = invested amount, funded = current value
+                  // projectGoal = total funding goal for the entire project
                   const totalCost = investment.invested || 0;
                   const funded = investment.currentValue || totalCost;
                   const roi = investment.roi || 0;
                   const timeline = investment.duration || "N/A";
+                  const projectGoal = investment.projectGoal || null;
                   
                   return (
                     <ProjectCard
@@ -284,6 +289,7 @@ export default function InvestorDashboard() {
                       roi={roi}
                       timeline={timeline}
                       category={investment.category}
+                      projectGoal={projectGoal}
                       isDonor={false}
                     />
                   );
