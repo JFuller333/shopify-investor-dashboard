@@ -52,29 +52,31 @@ export const ProjectCard = ({
         {!isDonor ? (
           // Investor view: Show individual return and project total cost
           <>
-            <div>
-              <div className="mb-2 flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Your Return</span>
-                <span className="font-medium">{fundingProgress.toFixed(1)}%</span>
-              </div>
-              <Progress value={fundingProgress} className="h-2" />
-              <div className="mt-2 flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">
-                  ${funded.toLocaleString()} / ${totalCost.toLocaleString()}
-                </span>
-                <span className="text-muted-foreground">
-                  ${remaining.toLocaleString()} gain
-                </span>
-              </div>
-            </div>
-            {projectGoal && (
-              <div className="rounded-lg border border-primary/20 bg-primary/5 p-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-primary">Project Total Cost</span>
-                  <span className="text-sm font-semibold">${projectGoal.toLocaleString()}</span>
+            <div className="space-y-3">
+              <div>
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Your Return</span>
+                  <span className="font-medium">{fundingProgress.toFixed(1)}%</span>
+                </div>
+                <Progress value={fundingProgress} className="h-2" />
+                <div className="mt-2 flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">
+                    ${funded.toLocaleString()} / ${totalCost.toLocaleString()}
+                  </span>
+                  <span className="text-muted-foreground">
+                    ${remaining.toLocaleString()} gain
+                  </span>
                 </div>
               </div>
-            )}
+              {projectGoal && (
+                <div className="pt-2 border-t border-border/50">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">Project Total Cost</span>
+                    <span className="text-sm font-semibold text-foreground">${projectGoal.toLocaleString()}</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           // Donor view: Show standard funding progress
