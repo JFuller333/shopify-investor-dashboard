@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { CreateProjectModal } from "@/components/CreateProjectModal";
 import { EditProjectModal } from "@/components/EditProjectModal";
+import { ProjectCard } from "@/components/ProjectCard";
 import { TrendingUp, DollarSign, Users, Target, Heart, BookOpen, Shield, Home, Calendar, ArrowUpRight, Edit, Trash2, Eye } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -256,93 +257,28 @@ export default function DonorDashboard() {
                 </div>
               ) : (
                 filteredProjects.map((project) => {
-                  const progress = (project.raised / project.goal) * 100;
-                  const Icon = project.icon;
+                  // Map donor project data to ProjectCard format
+                  // For donors: totalCost = goal, funded = raised
+                  const totalCost = project.goal || 0;
+                  const funded = project.raised || 0;
+                  const roi = 0; // Donor projects don't have ROI
+                  // Convert daysLeft to timeline format (e.g., "24 months")
+                  const daysToMonths = project.daysLeft ? Math.ceil(project.daysLeft / 30) : 0;
+                  const timeline = project.daysLeft ? `${daysToMonths} month${daysToMonths !== 1 ? 's' : ''}` : "Completed";
                   
                   return (
-                    <Card key={project.id} className="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10">
-                              <Icon className="h-5 w-5 text-primary" />
-                            </div>
-                            <div>
-                              <CardTitle className="text-lg">{project.title}</CardTitle>
-                              <p className="text-sm text-muted-foreground">{project.category}</p>
-                            </div>
-                          </div>
-                          <Badge 
-                            variant="secondary" 
-                            className={`${getStatusColor(project.status)} text-white`}
-                          >
-                            {project.status === 'nearly-complete' ? 'Nearly Complete' : project.status}
-                          </Badge>
-                        </div>
-                      </CardHeader>
-                      
-                      <CardContent className="space-y-4">
-                        <p className="text-sm text-muted-foreground">{project.description}</p>
-                        
-                        {/* Progress Bar */}
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="font-medium">${project.raised.toLocaleString()}</span>
-                            <span className="text-muted-foreground">of ${project.goal.toLocaleString()}</span>
-                          </div>
-                          <Progress value={progress} className="h-2" />
-                          <div className="flex justify-between text-xs text-muted-foreground">
-                            <span>{Math.round(progress)}% funded</span>
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              {project.daysLeft > 0 ? `${project.daysLeft} days left` : 'Completed'}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="flex items-center justify-between pt-2 border-t">
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="flex items-center gap-1">
-                              <Users className="h-3 w-3" />
-                              {project.donors} donors
-                            </span>
-                            <span className={`font-medium ${getImpactColor(project.impact)}`}>
-                              {project.impact} Impact
-                            </span>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              onClick={() => handleProjectView(project.id)}
-                            >
-                              <Eye className="h-3 w-3" />
-                            </Button>
-                          <EditProjectModal
-                            project={project}
-                            onProjectUpdate={handleProjectEdit}
-                            userType="donor"
-                          >
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                            >
-                              <Edit className="h-3 w-3" />
-                            </Button>
-                          </EditProjectModal>
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              onClick={() => handleProjectDelete(project.id)}
-                              className="text-danger hover:text-danger hover:bg-danger/10"
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <ProjectCard
+                      key={project.id}
+                      id={project.id.toString()}
+                      title={project.title}
+                      description={project.description}
+                      totalCost={totalCost}
+                      funded={funded}
+                      roi={roi}
+                      timeline={timeline}
+                      category={project.category}
+                      isDonor={true}
+                    />
                   );
                 })
               )}

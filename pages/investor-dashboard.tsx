@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { CreateProjectModal } from "@/components/CreateProjectModal";
 import { EditProjectModal } from "@/components/EditProjectModal";
+import { ProjectCard } from "@/components/ProjectCard";
 import { TrendingUp, DollarSign, BarChart3, Target, Zap, Building2, Leaf, Smartphone, ArrowUpRight, Calendar, Users, TrendingDown, Edit, Trash2, Eye } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -265,112 +266,26 @@ export default function InvestorDashboard() {
                 </div>
               ) : (
                 filteredInvestments.map((investment) => {
-                  const invested = investment.invested || 0;
-                  const currentValue = investment.currentValue || invested;
-                  const gain = currentValue - invested;
-                  const gainPercent = invested > 0 ? (gain / invested) * 100 : 0;
-                  const Icon = investment.icon;
+                  // Map investment data to ProjectCard format
+                  // For investments: totalCost = invested amount, funded = current value
+                  const totalCost = investment.invested || 0;
+                  const funded = investment.currentValue || totalCost;
+                  const roi = investment.roi || 0;
+                  const timeline = investment.duration || "N/A";
                   
                   return (
-                    <Card key={investment.id} className="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10">
-                              <Icon className="h-5 w-5 text-primary" />
-                            </div>
-                            <div>
-                              <CardTitle className="text-lg">{investment.title}</CardTitle>
-                              <p className="text-sm text-muted-foreground">{investment.category}</p>
-                            </div>
-                          </div>
-                          <Badge 
-                            variant="secondary" 
-                            className={`${getStatusColor(investment.status)} text-white`}
-                          >
-                            {investment.status}
-                          </Badge>
-                        </div>
-                      </CardHeader>
-                      
-                      <CardContent className="space-y-4">
-                        <p className="text-sm text-muted-foreground">{investment.description}</p>
-                        
-                        {/* Value & ROI */}
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <p className="text-sm text-muted-foreground">Current Value</p>
-                              <p className="text-xl font-bold">${currentValue.toLocaleString()}</p>
-                            </div>
-                            <div className="text-right">
-                              <p className={`text-lg font-bold ${getROIColor(gainPercent)}`}>
-                                {gain >= 0 ? '+' : ''}${gain.toLocaleString()}
-                              </p>
-                              <p className={`text-sm ${getROIColor(gainPercent)}`}>
-                                {gainPercent >= 0 ? '+' : ''}{gainPercent.toFixed(1)}%
-                              </p>
-                            </div>
-                          </div>
-                          
-                          {/* Progress Bar for ROI */}
-                          <div className="space-y-1">
-                            <div className="flex justify-between text-xs text-muted-foreground">
-                              <span>ROI Progress</span>
-                              <span>{investment.roi >= 0 ? '+' : ''}{investment.roi || 0}%</span>
-                            </div>
-                            <Progress 
-                              value={Math.abs(investment.roi || 0)} 
-                              className="h-2"
-                              // @ts-ignore - custom prop for color
-                              data-roi={investment.roi || 0}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="flex items-center justify-between pt-2 border-t">
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className={`font-medium ${getRiskColor(investment.risk)}`}>
-                              {investment.risk} Risk
-                            </span>
-                            <span className="flex items-center gap-1 text-muted-foreground">
-                              <Calendar className="h-3 w-3" />
-                              {investment.duration}
-                            </span>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              onClick={() => handleInvestmentView(investment.id)}
-                            >
-                              <Eye className="h-3 w-3" />
-                            </Button>
-                            <EditProjectModal
-                              project={investment}
-                              onProjectUpdate={handleInvestmentEdit}
-                              userType="investor"
-                            >
-                              <Button 
-                                size="sm" 
-                                variant="outline"
-                              >
-                                <Edit className="h-3 w-3" />
-                              </Button>
-                            </EditProjectModal>
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              onClick={() => handleInvestmentDelete(investment.id)}
-                              className="text-danger hover:text-danger hover:bg-danger/10"
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <ProjectCard
+                      key={investment.id}
+                      id={investment.id.toString()}
+                      title={investment.title}
+                      description={investment.description}
+                      totalCost={totalCost}
+                      funded={funded}
+                      roi={roi}
+                      timeline={timeline}
+                      category={investment.category}
+                      isDonor={false}
+                    />
                   );
                 })
               )}
