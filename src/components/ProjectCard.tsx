@@ -49,32 +49,51 @@ export const ProjectCard = ({
       </div>
 
       <div className="space-y-4">
-        <div>
-          <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Funding Progress</span>
-            <span className="font-medium">{fundingProgress.toFixed(1)}%</span>
-          </div>
-          <Progress value={fundingProgress} className="h-2" />
-          <div className="mt-2 flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">
-              ${funded.toLocaleString()} / ${totalCost.toLocaleString()}
-            </span>
-            <span className="text-muted-foreground">
-              ${remaining.toLocaleString()} remaining
-            </span>
-          </div>
-          {showProjectGoal && (
-            <div className="mt-3 rounded-lg border border-primary/20 bg-primary/5 p-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-primary">Project Goal</span>
-                <span className="text-sm font-semibold">${projectGoal.toLocaleString()}</span>
+        {!isDonor ? (
+          // Investor view: Show individual return and project total cost
+          <>
+            <div>
+              <div className="mb-2 flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Your Return</span>
+                <span className="font-medium">{fundingProgress.toFixed(1)}%</span>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Total funding target for the entire project
-              </p>
+              <Progress value={fundingProgress} className="h-2" />
+              <div className="mt-2 flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">
+                  ${funded.toLocaleString()} / ${totalCost.toLocaleString()}
+                </span>
+                <span className="text-muted-foreground">
+                  ${remaining.toLocaleString()} gain
+                </span>
+              </div>
             </div>
-          )}
-        </div>
+            {projectGoal && (
+              <div className="rounded-lg border border-primary/20 bg-primary/5 p-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-medium text-primary">Project Total Cost</span>
+                  <span className="text-sm font-semibold">${projectGoal.toLocaleString()}</span>
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          // Donor view: Show standard funding progress
+          <div>
+            <div className="mb-2 flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Funding Progress</span>
+              <span className="font-medium">{fundingProgress.toFixed(1)}%</span>
+            </div>
+            <Progress value={fundingProgress} className="h-2" />
+            <div className="mt-2 flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">
+                ${funded.toLocaleString()} / ${totalCost.toLocaleString()}
+              </span>
+              <span className="text-muted-foreground">
+                ${remaining.toLocaleString()} remaining
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="flex items-center justify-between rounded-lg bg-accent/50 p-4">
           {!isDonor && (
