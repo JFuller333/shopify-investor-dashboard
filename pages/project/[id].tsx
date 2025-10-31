@@ -171,6 +171,11 @@ export default function ProjectDetail() {
     const gain = currentValue - invested;
     const gainPercent = invested > 0 ? (gain / invested) * 100 : 0;
     const Icon = project.icon;
+    // Project Performance metrics (separate from individual ROI)
+    const projectGoal = project.projectGoal || 0;
+    const totalInvested = project.totalInvested || 0; // Total invested by all investors
+    const projectProgress = projectGoal > 0 ? (totalInvested / projectGoal) * 100 : 0;
+    const projectRemaining = projectGoal - totalInvested;
 
     return (
       <Layout>
@@ -290,6 +295,42 @@ export default function ProjectDetail() {
                   </div>
                 </div>
               </Card>
+
+              {/* Project Performance */}
+              {projectGoal > 0 && (
+                <Card className="p-6">
+                  <h2 className="mb-4 text-xl font-semibold">Project Performance</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="mb-2 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Project Funding Progress</span>
+                        <span className="font-medium">{projectProgress.toFixed(1)}%</span>
+                      </div>
+                      <Progress 
+                        value={projectProgress} 
+                        className="h-3"
+                      />
+                      <div className="mt-3 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">
+                          Total Invested: ${totalInvested.toLocaleString()}
+                        </span>
+                        <span className="text-muted-foreground">
+                          ${projectRemaining.toLocaleString()} remaining
+                        </span>
+                      </div>
+                      <div className="mt-4 rounded-lg border border-primary/20 bg-primary/5 p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-primary">Project Total Cost</span>
+                          <span className="text-lg font-bold">${projectGoal.toLocaleString()}</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Total funding needed to complete the project
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              )}
 
               {/* Project Details */}
               <Card className="p-6">

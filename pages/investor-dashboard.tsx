@@ -22,7 +22,8 @@ const initialInvestments = [
     status: "active",
     risk: "High",
     duration: "18 months",
-    projectGoal: 500000 // Total funding goal for the entire project
+    projectGoal: 500000, // Total funding goal for the entire project
+    totalInvested: 375000 // Total invested by all investors combined
   },
   {
     id: 2,
@@ -36,7 +37,8 @@ const initialInvestments = [
     status: "active",
     risk: "Medium",
     duration: "24 months",
-    projectGoal: 750000 // Total funding goal for the entire project
+    projectGoal: 750000, // Total funding goal for the entire project
+    totalInvested: 525000 // Total invested by all investors combined
   },
   {
     id: 3,
@@ -50,7 +52,8 @@ const initialInvestments = [
     status: "active",
     risk: "Low",
     duration: "36 months",
-    projectGoal: 1000000 // Total funding goal for the entire project
+    projectGoal: 1000000, // Total funding goal for the entire project
+    totalInvested: 850000 // Total invested by all investors combined
   }
 ];
 
