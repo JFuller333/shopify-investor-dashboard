@@ -297,10 +297,10 @@ export default function ProjectDetail() {
               </Card>
 
               {/* Project Performance */}
-              {projectGoal > 0 && (
-                <Card className="p-6">
-                  <h2 className="mb-4 text-xl font-semibold">Project Performance</h2>
-                  <div className="space-y-4">
+              <Card className="p-6">
+                <h2 className="mb-4 text-xl font-semibold">Project Performance</h2>
+                <div className="space-y-4">
+                  {projectGoal > 0 ? (
                     <div>
                       <div className="mb-2 flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Project Funding Progress</span>
@@ -328,9 +328,15 @@ export default function ProjectDetail() {
                         </p>
                       </div>
                     </div>
-                  </div>
-                </Card>
-              )}
+                  ) : (
+                    <div className="text-center py-4">
+                      <p className="text-sm text-muted-foreground">
+                        Project performance data will be displayed here once project goal is set.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Card>
 
               {/* Project Details */}
               <Card className="p-6">

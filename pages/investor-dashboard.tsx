@@ -91,12 +91,16 @@ export default function InvestorDashboard() {
     if (savedInvestments) {
       try {
         const parsedInvestments = JSON.parse(savedInvestments);
-        // Convert icon strings back to icon components
-        const investmentsWithIcons = parsedInvestments.map((investment: any) => ({
-          ...investment,
-          icon: getIconComponent(investment.iconName)
-        }));
-        setInvestments(investmentsWithIcons);
+        // Merge with initial data to ensure new fields (projectGoal, totalInvested) are included
+        const mergedInvestments = parsedInvestments.map((investment: any) => {
+          const initial = initialInvestments.find(init => init.id === investment.id);
+          return {
+            ...initial, // Start with initial data (has projectGoal, totalInvested)
+            ...investment, // Override with saved data (preserves user edits)
+            icon: getIconComponent(investment.iconName || initial?.icon?.name)
+          };
+        });
+        setInvestments(mergedInvestments);
       } catch (error) {
         console.error('Error loading investments from localStorage:', error);
       }
